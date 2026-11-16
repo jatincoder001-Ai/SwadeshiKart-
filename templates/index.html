@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SwadeshiKart • Indian Alternatives to Foreign Brands</title>
+  <meta name="description" content="Compare foreign grocery products with quality Indian alternatives side by side. Save money and support local brands.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- ✨ Splash Screen -->
+  <div id="splash-screen" class="splash-screen">
+    <div class="splash-content">
+      <div class="splash-logo">
+        <span class="splash-lightning">⚡</span>
+        <span class="splash-brand">swadeshi<span class="splash-accent">kart</span></span>
+      </div>
+      <p class="splash-tagline">Vocal for Local • Compare &amp; Save</p>
+      <div class="splash-loader">
+        <div class="splash-loader-bar"></div>
+      </div>
+    </div>
+    <div class="splash-flag">🇮🇳</div>
+  </div>
+
+  <!-- Top Announcement Bar -->
+  <!-- <div class="top-announcement">
+    <div class="announcement-inner">
+      <span class="badge-flash">⚡ COMPARE & SAVE</span>
+      <span>Switch to Indian alternatives & save up to <strong>80% on grocery bills</strong>!</span>
+    </div>
+  </div> -->
+
+  <!-- Header -->
+  <header class="app-header animate-header">
+    <div class="header-container">
+      <div class="brand-logo" onclick="window.location.reload()">
+        <span class="logo-lightning">⚡</span>
+        <span>swadeshi<span class="logo-accent">kart</span></span>
+      </div>
+      <div class="header-badge-right">
+        <span class="pulse-dot"></span>
+        <span>Live Store Links</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <!-- Search Section -->
+    <section class="hero-section animate-hero">
+      <h1 class="hero-title">Find an Indian alternative for everyday groceries</h1>
+      <p class="hero-subtitle">Compare expensive foreign products with high-value Indian alternatives side-by-side.</p>
+
+      <!-- Search Box -->
+      <div class="search-wrapper">
+        <div class="search-input-box">
+          <span class="search-icon" aria-hidden="true">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+          <input 
+            id="search" 
+            type="text" 
+            placeholder="Search water, chips, biscuits, cleaning, shampoo..." 
+            autocomplete="off"
+            aria-label="Search grocery category"
+            role="combobox"
+            aria-autocomplete="list"
+            aria-expanded="false"
+          >
+          <button id="clear-search" class="clear-btn" type="button" aria-label="Clear search" hidden>×</button>
+        </div>
+        <ul id="suggestions" class="suggestions-list" role="listbox" hidden></ul>
+      </div>
+
+      <!-- Quick Category Pills -->
+      <div class="category-pills-bar">
+        <span class="pills-label">Quick Pick:</span>
+        <div class="pills-scroll" id="category-pills">
+          {% for cat in categories %}
+          <button class="cat-pill" type="button" data-cat-id="{{ cat.id }}" title="{{ cat.tagline }}">
+            <span class="cat-pill-icon">{{ cat.icon }}</span>
+            <span class="cat-pill-name">{{ cat.name }}</span>
+            <span class="cat-pill-count">{{ cat.total_count }}</span>
+          </button>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <!-- Alert / Message -->
+    <div id="message" class="message-box" hidden role="status"></div>
+
+    <!-- Category & Savings Banner -->
+    <section id="category-banner" class="category-banner" hidden>
+      <div class="banner-content">
+        <div class="banner-title-group">
+          <span id="banner-icon" class="banner-cat-icon">🛒</span>
+          <div>
+            <h2 id="banner-title" class="banner-cat-name">Category</h2>
+            <p id="banner-tagline" class="banner-cat-tagline">Comparing foreign brands with Indian alternatives</p>
+          </div>
+        </div>
+        <div id="savings-badge" class="savings-badge">
+          <span>💰</span>
+          <span id="savings-text">Switch to Indian brands & save up to <strong>80%</strong></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mobile Comparison View Switcher (Visible only on mobile <= 768px) -->
+    <div id="mobile-view-tabs" class="mobile-tabs-bar" hidden>
+      <button class="mobile-tab-btn active" data-view="both" type="button">⚡ Both</button>
+      <button class="mobile-tab-btn" data-view="indian" type="button">🇮🇳 Indian <span id="m-tab-indian-count" class="m-count-pill"></span></button>
+      <button class="mobile-tab-btn" data-view="foreign" type="button">⚠️ Foreign <span id="m-tab-foreign-count" class="m-count-pill"></span></button>
+    </div>
+
+    <!-- Side-by-Side Comparison -->
+    <section id="results" class="comparison-grid" hidden>
+      <!-- Foreign Column (Red Warning) -->
+      <div class="comparison-col col-foreign">
+        <div class="col-header">
+          <div class="col-title-wrap">
+            <span class="col-badge foreign-badge">⚠️ Expensive / Imported</span>
+            <h3 class="col-heading">Foreign Brands</h3>
+          </div>
+          <span id="foreign-count" class="count-tag foreign-count-tag">5 Products</span>
+        </div>
+        <div id="foreign-list" class="cards-list"></div>
+      </div>
+
+      <!-- Indian Column (Green Verified) -->
+      <div class="comparison-col col-indian">
+        <div class="col-header">
+          <div class="col-title-wrap">
+            <span class="col-badge indian-badge">✅ 100% Swadeshi • High Value</span>
+            <h3 class="col-heading">Indian Alternatives</h3>
+          </div>
+          <span id="indian-count" class="count-tag indian-count-tag">5 Alternatives</span>
+        </div>
+        <div id="indian-list" class="cards-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <p class="footer-title">⚡ SwadeshiKart • Smart Grocery Alternatives</p>
+    <p class="footer-sub">Vocal for Local • Compare & Save • Instant Blinkit links</p>
+  </footer>
+
+  <script>
+    const SUGGESTIONS = {{ suggestions | tojson }};
+    const CATEGORIES = {{ categories | tojson }};
+  </script>
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

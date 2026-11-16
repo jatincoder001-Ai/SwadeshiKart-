@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="g_15" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF1F2" />
+      <stop offset="100%" stop-color="#FFE4E6" />
+    </linearGradient>
+  </defs>
+  <rect width="200" height="200" rx="20" fill="url(#g_15)" stroke="#DC2626" stroke-width="2" stroke-opacity="0.25" />
+  <circle cx="100" cy="78" r="42" fill="#ffffff" opacity="0.9" />
+  <text x="100" y="80" font-size="40" text-anchor="middle" dominant-baseline="central">🍟</text>
+  <rect x="16" y="138" width="168" height="38" rx="10" fill="#ffffff" opacity="0.95" />
+  <text x="100" y="162" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="800" fill="#DC2626" text-anchor="middle">Cheetos</text>
+  <rect x="14" y="14" width="84" height="24" rx="12" fill="#DC2626" />
+  <text x="56" y="30" font-family="system-ui, -apple-system, sans-serif" font-size="11" font-weight="700" fill="#ffffff" text-anchor="middle">⚠️ USA</text>
+</svg>
